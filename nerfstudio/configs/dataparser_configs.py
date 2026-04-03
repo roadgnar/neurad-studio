@@ -21,22 +21,38 @@ from typing import TYPE_CHECKING
 
 import tyro
 
-from nerfstudio.data.dataparsers.argoverse2_dataparser import Argoverse2DataParserConfig
 from nerfstudio.data.dataparsers.base_dataparser import DataParserConfig
 from nerfstudio.data.dataparsers.kittimot_dataparser import KittiMotDataParserConfig
-from nerfstudio.data.dataparsers.nuscenes_dataparser import NuScenesDataParserConfig
-from nerfstudio.data.dataparsers.pandaset_dataparser import PandaSetDataParserConfig
-from nerfstudio.data.dataparsers.zod_dataparser import ZodDataParserConfig
 from nerfstudio.plugins.registry_dataparser import discover_dataparsers
 from nerfstudio.utils.rich_utils import CONSOLE
 
 dataparsers = {
     "kittimot-data": KittiMotDataParserConfig(),
-    "nuscenes-data": NuScenesDataParserConfig(),
-    "argoverse2-data": Argoverse2DataParserConfig(),
-    "zod-data": ZodDataParserConfig(),
-    "pandaset-data": PandaSetDataParserConfig(),
 }
+
+try:
+    from nerfstudio.data.dataparsers.nuscenes_dataparser import NuScenesDataParserConfig
+    dataparsers["nuscenes-data"] = NuScenesDataParserConfig()
+except ImportError:
+    CONSOLE.print("NuScenes dataparser has missing dependencies.")
+
+try:
+    from nerfstudio.data.dataparsers.argoverse2_dataparser import Argoverse2DataParserConfig
+    dataparsers["argoverse2-data"] = Argoverse2DataParserConfig()
+except ImportError:
+    CONSOLE.print("Argoverse2 dataparser has missing dependencies.")
+
+try:
+    from nerfstudio.data.dataparsers.zod_dataparser import ZodDataParserConfig
+    dataparsers["zod-data"] = ZodDataParserConfig()
+except ImportError:
+    CONSOLE.print("ZOD dataparser has missing dependencies.")
+
+try:
+    from nerfstudio.data.dataparsers.pandaset_dataparser import PandaSetDataParserConfig
+    dataparsers["pandaset-data"] = PandaSetDataParserConfig()
+except ImportError:
+    CONSOLE.print("PandaSet dataparser has missing dependencies.")
 
 try:
     from nerfstudio.data.dataparsers.waymo_dataparser import WoDParserConfig

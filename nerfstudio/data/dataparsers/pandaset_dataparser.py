@@ -25,7 +25,10 @@ import pandas as pd
 import pyquaternion
 import torch
 import yaml
-from pandaset import DataSet
+try:
+    from pandaset import DataSet
+except ImportError:
+    DataSet = None  # type: ignore[assignment,misc]
 
 from nerfstudio.cameras.cameras import Cameras, CameraType
 from nerfstudio.cameras.lidars import Lidars, LidarType

@@ -60,7 +60,7 @@ dependencies = [
     "torchmetrics[image]>=1.0.1",
     "typing_extensions>=4.4.0",
     "viser@git+https://github.com/atonderski/viser.git",
-    "nuscenes-devkit>=1.1.1",
+    # "nuscenes-devkit>=1.1.1",  # dataset-specific, not needed for CyvlDataParser
     "wandb>=0.13.3",
     "xatlas",
     "trimesh>=3.20.2",
@@ -69,11 +69,11 @@ dependencies = [
     "pytorch-msssim",
     "pathos",
     "packaging",
-    "zod>=0.1.7",
-    "pandaset@git+https://github.com/scaleapi/pandaset-devkit.git#egg=pandaset&subdirectory=python",
-    "av2==0.2.1",
+    # "zod>=0.1.7",  # dataset-specific, not needed for CyvlDataParser
+    # "pandaset@git+https://github.com/scaleapi/pandaset-devkit.git#egg=pandaset&subdirectory=python",  # dataset-specific, not needed for CyvlDataParser
+    # "av2==0.2.1",  # dataset-specific, not needed for CyvlDataParser
     "fastapi[all]==0.110",
-    "numba==0.57",
+    "numba>=0.60",
 ]
 
 [project.optional-dependencies]

@@ -171,9 +171,11 @@ class RenderStateMachine(threading.Thread):
                         with torch.no_grad(), viewer_utils.SetTrace(self.check_interrupt):
                             outputs = self.viewer.get_model().get_outputs_for_camera(camera, obb_box=obb)
                 except viewer_utils.IOChangeException:
-                    self.viewer.get_model().train()
+                    if self.viewer.trainer is not None:
+                        self.viewer.get_model().train()
                     raise
-                self.viewer.get_model().train()
+                if self.viewer.trainer is not None:
+                    self.viewer.get_model().train()
             num_rays = (camera.height * camera.width).item()
             if self.viewer.control_panel.layer_depth:
                 if isinstance(self.viewer.get_model(), SplatfactoModel):
@@ -418,7 +420,8 @@ class LidarRenderer(threading.Thread):
             self.viewer.get_model().eval()
             with torch.no_grad():
                 outputs = self.viewer.get_model().get_outputs_for_camera_ray_bundle(lidar_ray_bundle)
-            self.viewer.get_model().train()
+            if self.viewer.trainer is not None:
+                self.viewer.get_model().train()
 
         point_cloud = torch.cat(
             [

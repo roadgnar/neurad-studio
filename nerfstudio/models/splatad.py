@@ -1034,6 +1034,7 @@ class SplatADModel(ADModel):
 
         return out
 
+    @torch.no_grad()
     def get_lidar_outputs(self, lidar: Lidars) -> Dict[str, Union[torch.Tensor, List]]:
         """Takes in a camera and returns a dictionary of outputs.
 
